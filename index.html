@@ -1,0 +1,78 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Media Recommendation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <form action="/">
+
+     <!--The drop down option -->
+    <label for="media-select">Choose a media: </label>
+    <select name="media" id="media-select">
+      <option value="" selected disabled>--</option>
+      <option value="book" name="book">Book</option>
+      <option value="music" name="music">Music</option>
+      <option value="game" name="game">Game</option>
+      <option value="movie" name="movie" >Movie</option>
+    </select>
+    <!-- The content input by the user-->
+    <input type="text" name="content" placeholder="Media name" /> 
+
+      <input type="submit"/>
+    </form>
+    <ul id="userlist"></ul>
+  </body>
+  <script>
+    // Grab the form and fire off this function when submit button is clicked
+    document.querySelector("form").onsubmit = function(e) {
+      // Prevent page from reloading on submit
+      e.preventDefault();
+
+      // Create form structure to populate and send to API
+      let formData = new FormData();
+
+      // Grab content form    
+      let media = document.querySelector("#media-select").value;
+      let content = document.querySelector("input[name=content]").value;
+      console.log("media", media)
+
+      // Populate form
+      formData.append("media", media);
+      formData.append("content", content);
+
+      // Async fetch POST request to API
+      fetch("/checklists", {
+        method: "POST",
+        body: formData
+      })
+        .then(function(response) {
+          // This right here is the response we will receive before we convert
+          // it over to readable JSON
+          console.log("Response turning to readable JSON", response);
+          return response.json();
+        })
+        .then(function(response) {
+          // Don't worry if this says "false", it just returns that when the user already exists from flasks end
+          // Once it reaches here, the async is already successful
+          console.log("Successful async: ", JSON.stringify(response));
+
+          // This part can be omited, but here we are just taking this response and adding a user onto a list
+          // when a user is validated. This is for visualization purposes
+          // Create LI
+          if (JSON.stringify(response) != "false") {
+            let li = document.createElement("li");
+            let userText = document.createTextNode(JSON.stringify(response));
+            li.appendChild(userText);
+
+            // Append LI to UL
+            document.querySelector("#userlist").appendChild(li);
+          }
+        })
+        .catch(function(error) {
+          console.log("Error in async", error);
+        });
+    };
+  </script>
+</html>
