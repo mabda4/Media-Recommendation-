@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, request
+import chatgpt
 
 app = Flask(__name__)
 
@@ -16,11 +17,15 @@ def checklists():
     #Get the type of media and the content
     media = request.form.get('media')
     content = request.form.get('content')
+
+    recommendations = chatgpt.getRecomendations(media, content)
+
     #Checks if the user has input a media or content
     if media and content:
         response = {
             "media": media,
-            "content": content
+            "content": content,
+            "recommendations": recommendations
         }
         return jsonify(response)
     else:
