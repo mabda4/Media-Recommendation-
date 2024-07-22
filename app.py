@@ -3,9 +3,6 @@ import chatgpt
 
 app = Flask(__name__)
 
-# # List of users kept in a set
-# valid_users = {'tom', 'bill' }
-
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -22,15 +19,11 @@ def checklists():
 
     #Checks if the user has input a media or content
     if media and content:
-        response = {
-            "media": media,
-            "content": content,
-            "recommendations": recommendations
-        }
-        return jsonify(response)
+        #new HTML page with the recommendations
+        return render_template("results.html", media=media, content=content, recommendations=recommendations)
     else:
-        return jsonify({"error": "Missing media or content"}), 400
+        return "Missing media or content", 400
 
 
-if __name__== '__main___':
+if __name__== '__main__':
     app.run(debug=True, host="0.0.0.0")
