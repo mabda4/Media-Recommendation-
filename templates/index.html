@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-    <form action="/">
+    <form action="/checklists" method="POST">
 
      <!--The drop down option -->
     <label for="media-select">Choose a media: </label>
@@ -24,7 +24,7 @@
     </form>
     <ul id="userlist"></ul>
   </body>
-  <script>
+  <!-- <script>
     // Grab the form and fire off this function when submit button is clicked
     document.querySelector("form").onsubmit = function(e) {
       // Prevent page from reloading on submit
@@ -74,5 +74,5 @@
           console.log("Error in async", error);
         });
     };
-  </script>
+  </script> -->
 </html>
