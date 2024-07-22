@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Recommendations Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+    <h1>Recommendations</h1>
+    <p><strong>Media:</strong> {{ media }}</p>
+    <p><strong>Content:</strong> {{ content }}</p>
+    <h2>Recommended Items:</h2>
+    <ul>
+        {% for item in recommendations.split('\n') %}
+            <li>{{ item.strip() }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+
+</body>
+</html>
