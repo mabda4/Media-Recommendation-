@@ -1,5 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 import chatgpt
+import spotify
+
 
 app = Flask(__name__)
 
@@ -16,11 +18,23 @@ def checklists():
     content = request.form.get('content')
 
     recommendations = chatgpt.getRecomendations(media, content)
+   
 
-    #Checks if the user has input a media or content
+    # #Checks if the user has input a media or content
+    # if media and content:
+    #     #new HTML page with the recommendations
+    #     #nested if statements for the type of media
+    #     return render_template("results.html", media=media, content=content, recommendations=recommendations)
+    # else:
+    #     return "Missing media or content", 400
+
     if media and content:
-        #new HTML page with the recommendations
-        return render_template("results.html", media=media, content=content, recommendations=recommendations)
+        track_ids = {}
+        # if media.lower() == 'music':
+        track_ids = spotify.getTrackIDs(recommendations)
+
+        print("Track IDs:", track_ids)
+        return render_template("results.html", media=media, content=content, recommendations=recommendations, track_ids=track_ids)
     else:
         return "Missing media or content", 400
 
