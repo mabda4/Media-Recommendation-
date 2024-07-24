@@ -30,10 +30,11 @@ def getTrackIDs(recommendations):
                 track_name = parts[0].strip().strip('"')
                 artist = parts[1].strip().strip('"')
                 
-                query = f'{track_name} by {artist}'
+                query = f'{track_name}{artist}'
                 #debug query
                 print("Query", query)
-                result = sp.search(q=query, limit=1, type='track')
+                #Need to fix this so that the track ID is from the original artist and not karaoke or remix version
+                result = sp.search(q=query, limit=10, type='track')
                 
                 tracks = result.get('tracks', {}).get('items', [])
                 if tracks:
