@@ -39,9 +39,8 @@ def getTrackIDs(recommendations):
                 if tracks:
                     track_id = tracks[0]['id']
                     track_ids[line.strip()] = track_id
-                    print("Track ID:", track_id)  # Debugging line
+                    print("Track ID:", track_id) #debug line
             except IndexError:
-                # I
                 print(f"Error due to format issue: {line}")
 
     return track_ids
