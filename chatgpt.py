@@ -12,7 +12,7 @@ def getRecomendations(media, content):
   completion = client.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=[
-      {"role": "system", "content": "You are to give me media recommendations in a list with no extra text."},
+      {"role": "system", "content": "You are to give me media recommendations in a list with no extra text and no more than 5 recommendations and no reasong for the recommendations at all."},
       {"role": "user", "content": f'Give me {media} recommendations based on {content}'},
     ]
   )
