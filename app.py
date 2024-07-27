@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request
 import chatgpt
 import spotify
 import movie
+import gaming
 
 
 app = Flask(__name__)
@@ -32,14 +33,18 @@ def checklists():
     if media and content:
         track_ids = {}
         trailers = {}
+        games = {}
         if media.lower() == 'music':
             track_ids = spotify.getTrackIDs(recommendations)
             print("Track IDs:", track_ids)
         elif media.lower() == 'movie':
             trailers = movie.getTrailers(recommendations)
             print("Trailers:", trailers)
+        elif media.lower() == 'game':
+            games = gaming.getPictures(recommendations)
+            print("Games:", games)
 
-        return render_template("results.html", media=media, content=content, recommendations=recommendations, track_ids=track_ids, trailers=trailers)
+        return render_template("results.html", media=media, content=content, recommendations=recommendations, track_ids=track_ids, trailers=trailers, games=games)
     else:
         return "Missing media or content", 400
 
