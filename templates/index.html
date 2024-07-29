@@ -1,29 +1,76 @@
-<!DOCTYPE <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8" />
     <title>Media Recommendation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
-  <body>
-    <form action="/checklists" method="POST">
+    <style>
+        body {
+            background-image: url('{{ url_for('static', filename='background.png') }}');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            position: relative;
+        }
+        .container {
+            border: 2px dotted white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            width: 600px; 
+        }
+        select {
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #BDCFFF;
+            width: 300px; 
+            position: left;
+        }
 
-     <!--The drop down option -->
-    <label for="media-select">Choose a media: </label>
-    <select name="media" id="media-select">
-      <option value="" selected disabled>--</option>
-      <option value="book" name="book">Book</option>
-      <option value="music" name="music">Music</option>
-      <option value="game" name="game">Game</option>
-      <option value="movie" name="movie" >Movie</option>
-    </select>
-    <!-- The content input by the user-->
-    <input type="text" name="content" placeholder="Media name" /> 
+        input[type="text"] {
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #BDCFFF;
+            width: calc(100% - 22px); 
+        }
 
-      <input type="submit"/>
-    </form>
-    <ul id="userlist"></ul>
-  </body>
+        input[type="submit"] {
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #BDCFFF;
+            width: 200px; 
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="/checklists" method="POST">
+            <!--The drop down option -->
+            <select name="media" id="media-select" style="background-color: #BDCFFF;">
+                <option value="" selected disabled>Choose a type of media:</option>
+                <option value="book" name="book">Book</option>
+                <option value="music" name="music">Music</option>
+                <option value="game" name="game">Game</option>
+                <option value="movie" name="movie">Movie</option>
+            </select>
+            <!-- The content input by the user-->
+            <input type="text" name="content" placeholder="Media name" /> 
+            <input type="submit" value="Recommend"style="background-color: #BDCFFF;"/>
+        </form>
+        <ul id="userlist"></ul>
+    </div>
+</body>
   <!-- <script>
     // Grab the form and fire off this function when submit button is clicked
     document.querySelector("form").onsubmit = function(e) {
