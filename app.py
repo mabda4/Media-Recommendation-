@@ -3,6 +3,7 @@ import chatgpt
 import spotify
 import movie
 import gaming
+import book
 
 
 app = Flask(__name__)
@@ -43,8 +44,11 @@ def checklists():
         elif media.lower() == 'game':
             games = gaming.getPictures(recommendations)
             print("Games:", games)
+        elif media.lower() == 'book':
+                books = book.getBooks(recommendations)
+                print("Books", books)
 
-        return render_template("results.html", media=media, content=content, recommendations=recommendations, track_ids=track_ids, trailers=trailers, games=games)
+        return render_template("results.html", media=media, content=content, recommendations=recommendations, track_ids=track_ids, trailers=trailers, games=games, books=books)
     else:
         return "Missing media or content", 400
 
