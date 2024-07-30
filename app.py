@@ -35,6 +35,8 @@ def checklists():
         track_ids = {}
         trailers = {}
         games = {}
+        books = {}
+        
         if media.lower() == 'music':
             track_ids = spotify.getTrackIDs(recommendations)
             print("Track IDs:", track_ids)
