@@ -94,6 +94,17 @@
     </ul>
     {% endif %}
 
+    
+    {% if media.lower() == 'book' %}
+    <h2>Book Information</h2>
+    
+        {% for cover in books %}
+            
+            <img src="{{ cover }}" alt="Book Cover">
+            
+        {% endfor %}
+    {% endif %}
+
     {% if media.lower() == 'game' %}
     <h2>Game Images</h2>
     <table>
