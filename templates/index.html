@@ -16,11 +16,20 @@
             position: relative;
         }
         .container {
-            border: 2px dotted white;
+            border: 5px dotted white;
             padding: 20px;
             text-align: center;
             position: relative;
             width: 600px; 
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 200px; /* Adjust the size of the logo */
+            height: auto;
+            z-index: 3; /* Higher z-index to place it above both containers */
         }
         select {
             font-size: 18px;
@@ -54,6 +63,7 @@
     </style>
 </head>
 <body>
+    <img src="static/media-logo.png" alt="Logo" class="logo">
     <div class="container">
         <form action="/checklists" method="POST">
             <!--The drop down option -->
@@ -71,55 +81,4 @@
         <ul id="userlist"></ul>
     </div>
 </body>
-  <!-- <script>
-    // Grab the form and fire off this function when submit button is clicked
-    document.querySelector("form").onsubmit = function(e) {
-      // Prevent page from reloading on submit
-      e.preventDefault();
-
-      // Create form structure to populate and send to API
-      let formData = new FormData();
-
-      // Grab content form    
-      let media = document.querySelector("#media-select").value;
-      let content = document.querySelector("input[name=content]").value;
-      console.log("media", media)
-
-      // Populate form
-      formData.append("media", media);
-      formData.append("content", content);
-
-      // Async fetch POST request to API
-      fetch("/checklists", {
-        method: "POST",
-        body: formData
-      })
-        .then(function(response) {
-          // This right here is the response we will receive before we convert
-          // it over to readable JSON
-          console.log("Response turning to readable JSON", response);
-          return response.json();
-        })
-        .then(function(response) {
-          // Don't worry if this says "false", it just returns that when the user already exists from flasks end
-          // Once it reaches here, the async is already successful
-          console.log("Successful async: ", JSON.stringify(response));
-
-          // This part can be omited, but here we are just taking this response and adding a user onto a list
-          // when a user is validated. This is for visualization purposes
-          // Create LI
-          if (JSON.stringify(response) != "false") {
-            let li = document.createElement("li");
-            let userText = document.createTextNode(JSON.stringify(response));
-            li.appendChild(userText);
-
-            // Append LI to UL
-            document.querySelector("#userlist").appendChild(li);
-          }
-        })
-        .catch(function(error) {
-          console.log("Error in async", error);
-        });
-    };
-  </script> -->
 </html>
