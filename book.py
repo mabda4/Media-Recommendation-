@@ -6,9 +6,8 @@ load_dotenv()
 api_key = os.environ.get("GOOGLE_BOOKS_API_KEY")
 
 def getBooks(recommendations):
-    
-    covers = []
-  
+    books = []
+
     for book_name in recommendations.split('\n'):
         book_name = book_name.replace(' ', '+')
         book_name = book_name[3:]
@@ -18,19 +17,25 @@ def getBooks(recommendations):
         r = requests.get(endpoint)
         data = r.json()
 
-        if not data['items']:
+        if not data.get('items'):
             print(f"No results found for {book_name}")
             continue
 
-        book_info = data ['items'][0]['volumeInfo']
+        book_info = data['items'][0]['volumeInfo']
         cover_url = book_info.get('imageLinks', {}).get('thumbnail', None)
+        title = book_info.get('title', 'Unknown Title')
+        description = book_info.get('description', 'No description available.')
+        book_link = book_info.get('canonicalVolumeLink', None)
 
         if cover_url:
-            # To make the image bigger
             cover_url = f"{cover_url}&fife=w500"
-            covers.append(cover_url)
+            books.append({
+                'cover_url': cover_url,
+                'title': title,
+                'description': description,
+                'link': book_link  
+            })
         else:
             print(f"No cover found for this book: {book_name}")
-    print("url for covers", covers)
-    return covers
 
+    return books
