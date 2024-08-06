@@ -61,10 +61,105 @@
             background-color: #000;
         }
 
+        /* Logo section styles */
+        .logo-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin-bottom: 20px; /* Space below the logo section */
+        }
+
+        .logo {
+            width: 200px;
+            height: auto;
+        }
+
+        .book-title {
+        text-align: center;
+        margin-bottom: 20px;
+        }
+
+    
+
+        .book-list {
+            display: flex;
+            flex-wrap: wrap; 
+            gap: 30px;
+            justify-content: center; 
+            padding: 20px;
+        }
+
+        .book-item {
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            gap: 15px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            background-color: #f9f9f9; 
+            padding: 15px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .book-cover {
+            width: 150px; 
+            height: auto; 
+        }
+
+        .book-info {
+            display: flex;
+            flex-direction: column; 
+            gap: 10px; 
+            position: relative; 
+        }
+
+        .book-description {
+            max-height: 60px; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+            transition: max-height 0.3s ease; 
+        }
+
+        .book-description.expanded {
+            max-height: none; 
+        }
+
+        .learn-more {
+            margin-top: 10px; 
+            padding: 10px 15px;
+            background-color: #BDCFFF; 
+            color: black;
+            text-decoration: none;
+            border-radius: 5px; 
+            font-weight: bold; 
+            transition: background-color 0.3s ease; 
+        }
+
+        .learn-more:hover {
+            background-color: #95aef4; 
+        }
+
+        .toggle-description {
+            color: #BDCFFF; 
+            cursor: pointer; 
+            text-decoration: underline;
+        }
+
+        .toggle-description:hover {
+            color: #95aef4; 
+        }
+
+
+
+
+
     </style>
 </head>
 <body>
-    <h1>Recommendations</h1>
+    <!-- <h1>Recommendations</h1>
     <p><strong>Media:</strong> {{ media }}</p>
     <p><strong>Content:</strong> {{ content }}</p>
     <h2>Recommended Items:</h2>
@@ -72,7 +167,22 @@
         {% for item in recommendations.split('\n') %}
             <li>{{ item.strip() }}</li>
         {% endfor %}
+    </ul> -->
+
+    <img src="static/media-logo.png" alt="Logo" class="logo">
+
+    <!--Check if the media is music-->
+    {% if media.lower() == 'song' %}
+    <h2 >Music Details</h2>
+    <ul>
+        <!--Iterate through each track names-->
+        {% for track_name, track_id in track_ids.items() %}
+            <li>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{ track_id }}?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </li>
+        {% endfor %}
     </ul>
+    {% endif %}
 
     <!--Check if the media is music-->
     {% if media.lower() == 'music' %}
@@ -87,27 +197,27 @@
     </ul>
     {% endif %}
 
-    {% if media.lower() == 'movie' %}
-    <h2>Movie Trailers</h2>
-    <ul>
-        {% for link in trailers %}
-            <li>
-                <iframe width="560" height="315" src="{{ link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
 
-    
     {% if media.lower() == 'book' %}
-    <h2>Book Information</h2>
-    
-        {% for cover in books %}
-            
-            <img src="{{ cover }}" alt="Book Cover">
-            
-        {% endfor %}
+    <h2 class="book-title">Book Information</h2>
+    <div class="book-list">
+    {% for book in books %}
+    <div class="book-item">
+        <img class="book-cover" src="{{ book.cover_url }}" alt="Book Cover">
+        <div class="book-info">
+            <h3>{{ book.title }}</h3>
+            <p class="book-description">{{ book.description }}</p>
+            <a href="#" class="toggle-description">Read More</a>
+            <a href="{{ book.link }}" class="learn-more" target="_blank">Learn More</a> 
+        </div>
+    </div>
+    {% endfor %}
+    </div>
     {% endif %}
+    
+
+
+
 
     {% if media.lower() == 'game' %}
     <h2>Game Images</h2>
@@ -166,7 +276,19 @@
                     });
                 });
             });
+
+        // Javascript for books - to collapse long descriptions
+        document.querySelectorAll('.toggle-description').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default anchor behavior
+                const description = this.previousElementSibling;
+                description.classList.toggle('expanded');
+                this.textContent = description.classList.contains('expanded') ? 'Read Less' : 'Read More';
+            });
         });
+
+    });
+
     </script>
 </body>
 </html>
