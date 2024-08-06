@@ -37,7 +37,7 @@ def checklists():
         games = {}
         books = {}
         
-        if media.lower() == 'music':
+        if media.lower() == 'song':
             track_ids = spotify.getTrackIDs(recommendations)
             print("Track IDs:", track_ids)
         elif media.lower() == 'movie':
