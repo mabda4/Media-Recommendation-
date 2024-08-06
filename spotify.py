@@ -26,13 +26,22 @@ def getTrackIDs(recommendations):
                     parts = line.split(' by ')
                 elif ' - ' in line:
                     parts = line.split(' - ')
+                else:
+                    #handle artist only recommendations
+                    artist = line.strip().strip('"')
+                    parts = [None, artist]
             
-                track_name = parts[0].strip().strip('"')
-                artist = parts[1].strip().strip('"')
-                
-                query = f'{track_name}{artist}'
-                #debug query
-                print("Query", query)
+                # Check if splitting resulted in at least two parts
+                if len(parts) >= 2:
+                    track_name = parts[0].strip().strip('"') if parts[0] else None
+                    artist = parts[1].strip().strip('"')
+                    
+                    if track_name:
+                        query = f'{track_name} {artist}'
+                    else:
+                        query = f'artist:{artist}'
+
+                print("Query:", query)
                 result = sp.search(q=query, limit=10, type='track')
                 
                 tracks = result.get('tracks', {}).get('items', [])
