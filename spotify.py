@@ -45,4 +45,3 @@ def getTrackIDs(recommendations):
                 print(f"Error due to format issue: {line}")
 
     return track_ids
-
