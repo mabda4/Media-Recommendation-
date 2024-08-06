@@ -7,6 +7,10 @@
     <style>
         body {
             background-image: url('{{ url_for('static', filename='background2.png') }}');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .container {
@@ -82,19 +86,20 @@
         color: white;
         }
         /*Music Section for Styling*/
-        .spotify-iframe {
-            border-radius: 12px; /* Rounded corners */
-            width: 100%; /* Full width of the container */
-            height: 352px; /* Fixed height */
-            border: none; /* Remove default border */
-            
-            }
-            .iframe-container {
+        .iframe-container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 margin-right: 20px;
             }
+        .spotify-iframe {
+            border-radius: 12px; /* Rounded corners */
+            width: 100%; /* Full width of the container */
+            height: 352px; /* Fixed height */
+            border: none; /* Remove default border */
+            margin-right: 30px;
+            }
+    
 
             /* Optional: Add styles for the <li> element if needed */
             li {
