@@ -76,13 +76,34 @@
             height: auto;
         }
 
-        .book-title {
+        .media-title {
         text-align: center;
         margin-bottom: 20px;
+        color: white;
         }
+        /*Music Section for Styling*/
+        .spotify-iframe {
+            border-radius: 12px; /* Rounded corners */
+            width: 100%; /* Full width of the container */
+            height: 352px; /* Fixed height */
+            border: none; /* Remove default border */
+            
+            }
+            .iframe-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right: 20px;
+            }
+
+            /* Optional: Add styles for the <li> element if needed */
+            li {
+            list-style: none; /* Remove default list styling */
+            margin: 10px 0; /* Adjust margin as needed */
+            }
 
     
-
+        /*Book Section for Styling*/
         .book-list {
             display: flex;
             flex-wrap: wrap; 
@@ -152,10 +173,32 @@
             color: #95aef4; 
         }
 
+        /*Go back home button*/
+        .center-container {
+            display: flex;
+            justify-content: center; /* Centers horizontally */
+            align-items: center; /* Centers vertically */
+        }
+        .back-home-link {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: black;
+            background-color: #BDCFFF;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
 
+        .back-home-link:hover {
+            background-color: #95aef4;
+            transform: scale(1.05);
+        }
 
-
-
+        .back-home-link:active {
+         background-color: #7595ed;
+        }
     </style>
 </head>
 <body>
@@ -173,33 +216,33 @@
 
     <!--Check if the media is music-->
     {% if media.lower() == 'song' %}
-    <h2 >Music Details</h2>
+    <h2 class="media-title" >Music Recommendation</h2>
     <ul>
         <!--Iterate through each track names-->
         {% for track_name, track_id in track_ids.items() %}
+        <li>
+            <iframe class="spotify-iframe" src="https://open.spotify.com/embed/track/{{ track_id }}?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </li>
+        
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if media.lower() == 'movie' %}
+    <h2 class="media-title">Moive Trailers</h2>
+    <ul>
+        {% for link in trailers %}
             <li>
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{ track_id }}?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe width="560" height="315" src="{{ link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </li>
         {% endfor %}
     </ul>
     {% endif %}
 
-    <!--Check if the media is music-->
-    {% if media.lower() == 'music' %}
-    <h2>Music Details</h2>
-    <ul>
-        <!--Iterate through each track names-->
-        {% for track_name, track_id in track_ids.items() %}
-            <li>
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{ track_id }}?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-            </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
 
 
     {% if media.lower() == 'book' %}
-    <h2 class="book-title">Book Information</h2>
+    <h2 class="media-title">Book Information</h2>
     <div class="book-list">
     {% for book in books %}
     <div class="book-item">
@@ -220,7 +263,7 @@
 
 
     {% if media.lower() == 'game' %}
-    <h2>Game Images</h2>
+    <h2 class="media-title">Game Images</h2>
     <table>
         {% for game_name, album in games.items() %}
             {% if album %}
@@ -251,8 +294,10 @@
     </table>
     {% endif %}
     <!--Go back home-->
-    <a href="{{ url_for('index') }}">Back to Home</a>
-
+    <div class="center-container">
+        <a href="{{ url_for('index') }}" class="back-home-link">Back to Home</a>
+    </div>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sliders = document.querySelectorAll('.slider-wrapper');
