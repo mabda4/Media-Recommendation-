@@ -31,7 +31,6 @@ def getTrailers(recommendations):
         # TMDB movie page link
         tmdb_link = f"https://www.themoviedb.org/movie/{movie_id}"
 
-
         endpoint = f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={api_key}"
 
         r = requests.get(endpoint)
