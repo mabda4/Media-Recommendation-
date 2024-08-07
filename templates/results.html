@@ -94,18 +94,16 @@
             }
         .spotify-iframe {
             border-radius: 12px; /* Rounded corners */
-            width: 100%; /* Full width of the container */
-            height: 352px; /* Fixed height */
-            border: none; /* Remove default border */
-            margin-right: 30px;
-            }
+            width: 97%; 
+            height: 352px;
+            border: none;
+            
+        }
     
-
-            /* Optional: Add styles for the <li> element if needed */
-            li {
-            list-style: none; /* Remove default list styling */
-            margin: 10px 0; /* Adjust margin as needed */
-            }
+         li {
+            list-style: none; /*remove default list style*/
+            margin: 10px 0; 
+        }
 
     
         /*Book Section for Styling*/
@@ -178,6 +176,56 @@
             color: #95aef4; 
         }
 
+        /*Moive*/
+        .movie-card-container {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .movie-card {
+            display: flex;
+            margin-bottom: 30px; 
+            border: 2px solid #ddd; 
+            border-radius: 12px; /* To make the corners rounded */
+            overflow: hidden;
+            background: rgba(86, 69, 69, 0.3); /* Transparent background */
+            backdrop-filter: blur(10px); /* Blur effect */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        }
+
+        .movie-info {
+            flex: 1;
+            padding: 30px; 
+            color: #fff; 
+        }
+
+        .movie-info h3 {
+            margin-top: 0;
+            font-size: 24px; /*font size for the title */
+        }
+
+        .movie-info p {
+            font-size: 18px; /* font size for description */
+            line-height: 1.6; 
+        }
+
+        .movie-trailer {
+            flex: 2;
+            padding: 20px; 
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+        }
+
+        .movie-trailer iframe {
+            width: 560px; 
+            height: 315px;
+            border: none; /* Remove default border */
+        }
+
+
+
         /*Go back home button*/
         .center-container {
             display: flex;
@@ -202,7 +250,7 @@
         }
 
         .back-home-link:active {
-         background-color: #7595ed;
+            background-color: #7595ed;
         }
     </style>
 </head>
@@ -234,17 +282,23 @@
     {% endif %}
 
     {% if media.lower() == 'movie' %}
-    <h2 class="media-title">Moive Trailers</h2>
-    <ul>
-        {% for link in trailers %}
-            <li>
-                <iframe width="560" height="315" src="{{ link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </li>
-        {% endfor %}
+    <h2 class="media-title">Movie Trailers</h2>
+    <ul class="movie-card-container">
+    {% for trailer in trailers %}
+        <li class="movie-card">
+        <div class="movie-info">
+            <h3>{{ trailer.title }}</h3>
+            <p>{{ trailer.description }}</p>
+            <a href="{{ trailer.tmdb_link }}" target="_blank">Learn More</a>
+        </div>
+        <div class="movie-trailer">
+            <iframe width="560" height="315" src="{{ trailer.trailer_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        </li>
+    {% endfor %}
     </ul>
-    {% endif %}
-
-
+{% endif %}
+  
 
     {% if media.lower() == 'book' %}
     <h2 class="media-title">Book Information</h2>
@@ -262,9 +316,6 @@
     {% endfor %}
     </div>
     {% endif %}
-    
-
-
 
 
     {% if media.lower() == 'game' %}
