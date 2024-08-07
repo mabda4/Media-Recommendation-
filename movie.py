@@ -22,7 +22,15 @@ def getTrailers(recommendations):
             print(f"No results found for {movie_name}")
             continue
 
-        movie_id = data['results'][0]['id']
+        #Updated to include name, description, and trailer
+        movie_data = data['results'][0]
+        movie_id = movie_data['id']
+        movie_title = movie_data['title']
+        movie_description = movie_data['overview']
+
+        # TMDB movie page link
+        tmdb_link = f"https://www.themoviedb.org/movie/{movie_id}"
+
 
         endpoint = f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={api_key}"
 
@@ -39,7 +47,13 @@ def getTrailers(recommendations):
         if trailer_id is None:
             continue
 
+        
         yt_url = f"https://www.youtube.com/embed/{trailer_id}"
-        trailers.append(yt_url)
+        trailers.append({
+            'title': movie_title,
+            'description': movie_description,
+            'trailer_url': yt_url,
+            'tmdb_link': tmdb_link
+        })
 
     return(trailers)
