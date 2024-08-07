@@ -20,16 +20,15 @@
             padding: 20px;
             text-align: center;
             position: relative;
-            width: 600px; 
+            width: 600px;
         }
 
         .logo {
             position: absolute;
             top: 20px;
             left: 20px;
-            width: 200px; 
+            width: 200px;
             height: auto;
-
         }
         select {
             font-size: 18px;
@@ -37,7 +36,7 @@
             margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #BDCFFF;
-            width: 300px; 
+            width: 300px;
             position: left;
         }
 
@@ -47,7 +46,7 @@
             margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #BDCFFF;
-            width: calc(100% - 22px); 
+            width: calc(100% - 22px);
         }
 
         input[type="submit"] {
@@ -56,16 +55,56 @@
             margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #BDCFFF;
-            width: 200px; 
+            width: 200px;
         }
 
+        .loader {
+            width: 250px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-family: helvetica, arial, sans-serif;
+            text-transform: uppercase;
+            font-weight: 900;
+            color:  #BDCFFF;
+            letter-spacing: 0.2em;
+            display: none; /* Hide the loader initially */
+        }
 
+        .loader::before, .loader::after {
+            content: "";
+            display: block;
+            width: 15px;
+            height: 15px;
+            background:  #BDCFFF;
+            position: absolute;
+            animation: load .7s infinite alternate ease-in-out;
+        }
+
+        .loader::before {
+            top: 0;
+        }
+
+        .loader::after {
+            bottom: 0;
+        }
+
+        @keyframes load {
+            0% { left: 0; height: 30px; width: 15px }
+            50% { height: 8px; width: 40px }
+            100% { left: 235px; height: 30px; width: 15px }
+        }
     </style>
 </head>
 <body>
+    <div class="loader">Generating...</div>
     <img src="static/media-logo.png" alt="Logo" class="logo">
     <div class="container">
-        <form action="/checklists" method="POST">
+        <form id="recommendationForm" action="/checklists" method="POST">
             <!--The drop down option -->
             <select name="media" id="media-select" style="background-color: #BDCFFF;">
                 <option value="" selected disabled>Choose a type of media:</option>
@@ -76,9 +115,22 @@
             </select>
             <!-- The content input by the user-->
             <input type="text" name="content" placeholder="Media name" /> 
-            <input type="submit" value="Recommend"style="background-color: #BDCFFF;"/>
+            <input type="submit" value="Recommend" style="background-color: #BDCFFF;" />
         </form>
         <ul id="userlist"></ul>
     </div>
+
+    <script>
+        document.getElementById('recommendationForm').onsubmit = function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            document.querySelector('.container').style.display = 'none'; // Hide the main content
+            document.querySelector('.loader').style.display = 'block'; // Show the loading screen
+            
+            // Simulate a delay for the loading screen (replace this with your actual processing logic)
+            setTimeout(function() {
+                document.getElementById('recommendationForm').submit(); // Submit the form
+            }, 2000); // 2 seconds delay for demonstration
+        };
+    </script>
 </body>
 </html>
