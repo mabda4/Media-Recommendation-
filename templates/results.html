@@ -284,20 +284,20 @@
     {% if media.lower() == 'movie' %}
     <h2 class="media-title">Movie Trailers</h2>
     <ul class="movie-card-container">
-    {% for trailer in trailers %}
-        <li class="movie-card">
-        <div class="movie-info">
-            <h3>{{ trailer.title }}</h3>
-            <p>{{ trailer.description }}</p>
-            <a href="{{ trailer.tmdb_link }}" target="_blank">Learn More</a>
-        </div>
-        <div class="movie-trailer">
-            <iframe width="560" height="315" src="{{ trailer.trailer_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        </li>
-    {% endfor %}
+        {% for trailer in trailers %}
+            <li class="movie-card">
+            <div class="movie-info">
+                <h3>{{ trailer.title }}</h3>
+                <p>{{ trailer.description }}</p>
+                <a href="{{ trailer.tmdb_link }}" target="_blank">Learn More</a>
+            </div>
+            <div class="movie-trailer">
+                <iframe width="560" height="315" src="{{ trailer.trailer_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            </li>
+        {% endfor %}
     </ul>
-{% endif %}
+    {% endif %}
   
 
     {% if media.lower() == 'book' %}
