@@ -15,6 +15,9 @@
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal overflow */
         }
 
 
@@ -73,26 +76,63 @@
         }
 
         /* Logo section styles */
+   
         .logo-section {
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: #f0f0f0;
-            padding: 20px;
-            margin-bottom: 20px; /* Space below the logo section */
         }
 
-
         .logo {
-            width: 200px;
+            top: 20px;
+            left: 20px;
+            width: 350px;
             height: auto;
+            border-radius: 15px;
+        }
+
+        /* Basic styling for the navbar */
+        .navbar {
+            display: flex;
+            align-items: center; /* Vertical alignment */
+            justify-content: space-between;
+            background-color: rgba(27, 29, 31, 0.8); /* Adjust the alpha value for transparency */
+            position: sticky;
+            top: 0; 
+            width: 100%;
+            z-index: 1000;
+            padding: 10px 20px; /* Add padding to give space inside the navbar */
+        }
+
+        /* Styling for the logo within the navbar */
+        .navbar .logo {
+            height: auto; /* Maintain the original height of the logo */
+            width: 300px;;
+        }
+
+        /* Styling for navigation links */
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            font-size: 16px;
+        }
+
+        .navbar a:hover {
+            background-color: #BDCFFF;
+            border-radius: 5px;
+        }
+
+        .home-icon{
+            margin-right: 30px;
         }
 
 
         .media-title {
-        text-align: center;
-        margin-bottom: 20px;
-        color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
         }
         /*Music Section for Styling*/
         .iframe-container {
@@ -275,18 +315,12 @@
             margin-right: 8px;
         }
 
-
-
-
-
-
-
-
         /*Go back home button*/
         .center-container {
             display: flex;
             justify-content: center; /* Centers horizontally */
             align-items: center; /* Centers vertically */
+            margin: 20px;
         }
         .back-home-link {
             display: inline-block;
@@ -324,8 +358,16 @@
     </ul> -->
 
 
-    <img src="static/media-logo.png" alt="Logo" class="logo">
-
+    <nav class="navbar">
+        <img src="static/mediatainment-logo.png" alt="Logo" class="logo">
+        <a href="{{ url_for('index') }}" class="home-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="40px" height="40px">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+        </a>
+    
+    </nav>
+    
 
     <!--Check if the media is music-->
     {% if media.lower() == 'song' %}
