@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Mediatainment </title>
+    <title>Mediatainment</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
         body {
@@ -22,8 +22,6 @@
             position: relative;
             width: 600px;
         }
-
-
         .logo {
             position: absolute;
             top: 20px;
@@ -40,7 +38,6 @@
             width: 300px;
             position: left;
         }
-
         input[type="text"] {
             font-size: 18px;
             padding: 10px;
@@ -49,11 +46,9 @@
             border: 1px solid #BDCFFF;
             width: calc(100% - 22px);
         }
-
         input[type="text"]:hover {
             background-color: #f0f8ff;
         }
-
         input[type="submit"] {
             display: inline-block;
             font-size: 16px;
@@ -66,12 +61,10 @@
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
         }
-
         input[type="submit"]:hover {
             background-color: #95aef4;
             transform: scale(1.05);
         }
-
         input[type="submit"]:active {
             background-color: #7595ed;
         }
@@ -88,29 +81,25 @@
             font-family: helvetica, arial, sans-serif;
             text-transform: uppercase;
             font-weight: 900;
-            color:  #BDCFFF;
+            color: #BDCFFF;
             letter-spacing: 0.2em;
             display: none; /* Hide the loader initially */
         }
-
         .loader::before, .loader::after {
             content: "";
             display: block;
             width: 15px;
             height: 15px;
-            background:  #BDCFFF;
+            background: #BDCFFF;
             position: absolute;
             animation: load .7s infinite alternate ease-in-out;
         }
-
         .loader::before {
             top: 0;
         }
-
         .loader::after {
             bottom: 0;
         }
-
         @keyframes load {
             0% { left: 0; height: 30px; width: 15px }
             50% { height: 8px; width: 40px }
@@ -132,23 +121,33 @@
                 <option value="movie" name="movie">Movie</option>
             </select>
             <!-- The content input by the user-->
-            <input type="text" name="content" placeholder="Media name" /> 
+            <input type="text" name="content" id="content-input" placeholder="Media name" /> 
             <input type="submit" value="Recommend" style="background-color: #BDCFFF;" />
         </form>
         <ul id="userlist"></ul>
     </div>
 
     <script>
+        function validateForm() {
+            var media = document.getElementById('media-select').value;
+            var content = document.getElementById('content-input').value;
+            if (media === "" || content.trim() === "") {
+                alert("Please choose a type of media and enter the media name.");
+                return false;
+            }
+            return true;
+        }
+
         document.getElementById('recommendationForm').onsubmit = function(event) {
             event.preventDefault(); // Prevent the default form submission
-            document.querySelector('.container').style.display = 'none'; // Hide the main content
-            document.querySelector('.loader').style.display = 'block'; // Show the loading screen
-            
-            setTimeout(function() {
-                document.getElementById('recommendationForm').submit(); // Submit the form
-            }, 1);
+            if (validateForm()) {
+                document.querySelector('.container').style.display = 'none'; // Hide the main content
+                document.querySelector('.loader').style.display = 'block'; // Show the loading screen
+                setTimeout(function() {
+                    document.getElementById('recommendationForm').submit(); // Submit the form
+                }, 1);
+            }
         };
-        
     </script>
 </body>
 </html>
