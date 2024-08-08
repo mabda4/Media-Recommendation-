@@ -58,11 +58,13 @@
             transition: opacity 250ms, background-color 250ms;
             display: inline-block;
             cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 1); /* Adds border */
         }
 
         .slider-nav a.active {
             opacity: 1;
             background-color: #000;
+
         }
 
         /* Logo section styles */
@@ -319,36 +321,34 @@
 
 
     {% if media.lower() == 'game' %}
-    <h2 class="media-title">Game Images</h2>
-    <table>
-        {% for game_name, album in games.items() %}
-            {% if album %}
-            <tr>
-                <th>{{ game_name }}</th>
-            </tr>
-            <tr>
-                <td>
-                    <section class ="container">
-                        <div class="slider-wrapper">
-                            <div class="slider">
-                                {% for pic in album %}
-                                    <img id="slide-{{ game_name }}{{ loop.index0 }}" src="{{ pic }}" alt="Pic">
-                                {% endfor %}
-                            </div>
-                            <div class="slider-nav">
-                                {% for pic in album %}
-                                    <a data-slide="{{ loop.index0 }}"></a>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </section>
-                    
-                </td>
-            </tr>
-            {% endif %}
+    <h2 class="media-title">Game Recommendations</h2>
+    <ul class="movie-card-container">
+        {% for game in games %}
+            <li class="movie-card">
+            <div class="movie-info">
+                <h3>{{ game.gameName }}</h3>
+                <p>{{ game.summary }}</p>
+                <a href="{{ game.gameUrl }}" target="_blank">Learn More</a>
+            </div>
+            <section class="container">
+                <div class="slider-wrapper">
+                    <div class="slider">
+                    {% for pic in game.album %}
+                        <img id="slide-{{ game.gameName }}{{ loop.index0 }}" src="{{ pic }}" alt="Pic">
+                    {% endfor %}
+                    </div>
+                    <div class="slider-nav">
+                    {% for pic in game.album %}
+                        <a data-slide="{{ loop.index0 }}"></a>
+                    {% endfor %}
+                    </div>
+                </div>
+            </section>
+            </li>
         {% endfor %}
-    </table>
+    </ul>
     {% endif %}
+
     <!--Go back home-->
     <div class="center-container">
         <a href="{{ url_for('index') }}" class="back-home-link">Back to Home</a>
