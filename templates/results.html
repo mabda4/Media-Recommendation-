@@ -339,6 +339,7 @@
             display: inline-block;
             padding: 10px 20px;
             font-size: 16px;
+            font-family: 'Orbitron', sans-serif;
             font-weight: bold;
             color: black;
             background-color: #BDCFFF;
@@ -384,7 +385,7 @@
 
     <!--Check if the media is music-->
     {% if media.lower() == 'song' %}
-    <h2 class="media-title" >Music Recommendation</h2>
+    <h2 class="media-title" >Music Recommendations</h2>
     <ul>
         <!--Iterate through each track names-->
         {% for track_name, track_id in track_ids.items() %}
@@ -398,7 +399,7 @@
 
 
     {% if media.lower() == 'movie' %}
-    <h2 class="media-title">Movie Trailers</h2>
+    <h2 class="media-title">Movie Recommendations</h2>
     <ul class="movie-card-container">
         {% for trailer in trailers %}
             <li class="movie-card">
@@ -421,7 +422,7 @@
 
 
     {% if media.lower() == 'book' %}
-    <h2 class="media-title">Book Information</h2>
+    <h2 class="media-title">Book Recommendations</h2>
     <div class="book-list">
     {% for book in books %}
     <div class="book-item">
