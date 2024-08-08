@@ -10,7 +10,7 @@ access_token = "Bearer " + response.json()['access_token']
 
 def getPictures(recommendations):
     print(recommendations)
-    pictures = {}
+    pictures = []
     for gameName in recommendations.split('\n'):
         album = []
         gameName = gameName[3:]
@@ -21,36 +21,49 @@ def getPictures(recommendations):
                 'Client-ID': api_key,
                 'Authorization': access_token
             },
-            data=f'fields artworks; search "{gameName}";'
+            data=f'fields artworks, url, summary; search "{gameName}";'
         )
 
         game_data = game_data_response.json()
 
+    
+        print(game_data)
+
         if not game_data:
             continue
+        
+        gameUrl = game_data[0]['url']
 
-        for game in game_data:
-            gameId = game['id']
-            imglink_response = post(
-                'https://api.igdb.com/v4/artworks',
-                headers={
-                    'Client-ID': api_key,
-                    'Authorization': access_token
-                },
-                data=f'fields url; where game = {gameId};'
-            )
-            artwork_data = imglink_response.json()
-            print(artwork_data)
+        game_ids = [game['id'] for game in game_data]
 
-            if not artwork_data:
-                continue
+        game_ids_str = ','.join(map(str, game_ids))
 
-            for artwork in artwork_data:
-                url = artwork['url']
-                url = url.replace("t_thumb", "t_original")
-                album.append(f"https:{url}")
 
-        pictures[gameName] = album
+        imglink_response = post(
+            'https://api.igdb.com/v4/artworks',
+            headers={
+                'Client-ID': api_key,
+                'Authorization': access_token
+            },
+            data=f'fields url; where game = ({game_ids_str});'
+        )
+        artwork_data = imglink_response.json()
+        print(artwork_data)
+
+        if not artwork_data:
+            continue
+            
+        for artwork in artwork_data:
+            url = artwork['url']
+            url = url.replace("t_thumb", "t_original")
+            album.append(f"https:{url}")
+
+        pictures.append({
+            'gameName': gameName,
+            'gameUrl': gameUrl,
+            'album': album,
+            'summary': game_data[0]['summary']
+            })
 
     return pictures
 
